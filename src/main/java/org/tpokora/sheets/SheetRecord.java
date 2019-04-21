@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class SheetRecord {
     Date date;
-    double temp;
-    double hum;
-    double pm10;
-    double pm25;
+    String temp;
+    String hum;
+    String pm10;
+    String pm25;
 
     public Date getDate() {
         return date;
@@ -17,35 +17,35 @@ public class SheetRecord {
         this.date = date;
     }
 
-    public double getTemp() {
+    public String getTemp() {
         return temp;
     }
 
-    public void setTemp(double temp) {
+    public void setTemp(String temp) {
         this.temp = temp;
     }
 
-    public double getHum() {
+    public String getHum() {
         return hum;
     }
 
-    public void setHum(double hum) {
+    public void setHum(String hum) {
         this.hum = hum;
     }
 
-    public double getPm10() {
+    public String getPm10() {
         return pm10;
     }
 
-    public void setPm10(double pm10) {
+    public void setPm10(String pm10) {
         this.pm10 = pm10;
     }
 
-    public double getPm25() {
+    public String getPm25() {
         return pm25;
     }
 
-    public void setPm25(double pm25) {
+    public void setPm25(String pm25) {
         this.pm25 = pm25;
     }
 

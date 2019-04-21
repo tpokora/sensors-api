@@ -34,10 +34,10 @@ public class SheetsService {
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 Date date = format.parse(row.get(0).toString());
                 record.setDate(date);
-                record.setTemp(Double.parseDouble(row.get(1).toString()));
-                record.setHum(Double.parseDouble(row.get(2).toString()));
-                record.setPm25(Double.parseDouble(row.get(3).toString()));
-                record.setPm10(Double.parseDouble(row.get(4).toString()));
+                record.setTemp(row.get(1).toString());
+                record.setHum(row.get(2).toString());
+                record.setPm25(row.get(3).toString());
+                record.setPm10(row.get(4).toString());
                 sheetRecords.add(record);
             }
         }
