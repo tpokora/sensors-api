@@ -23,7 +23,7 @@ import java.util.List;
 
 public class ReadSheets {
 
-    private static final String APPLICATION_NAME = "Google Sheets API Java Quickstart";
+    private static final String APPLICATION_NAME = "SensorsAPI";
     private static final String CREDENTIALS_FILE_PATH = "/credentials.json";
     public static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     public static final List<String> SCOPES = Collections.singletonList(SheetsScopes.SPREADSHEETS_READONLY);
@@ -44,10 +44,10 @@ public class ReadSheets {
         return new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
     }
 
-    public List<List<Object>> test() throws GeneralSecurityException, IOException {
+    public List<List<Object>> readSheet() throws GeneralSecurityException, IOException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
-        final String spreadsheetId = "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms";
-        final String range = "Class Data!A2:E";
+        final String spreadsheetId = "";
+        final String range = "Sensors!A2:E";
 
         Sheets service = new Sheets.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(APPLICATION_NAME)
@@ -57,15 +57,6 @@ public class ReadSheets {
                 .execute();
 
         List<List<Object>> values = response.getValues();
-        if (values == null || values.isEmpty()) {
-            System.out.println("No data found.");
-        } else {
-            System.out.println("Name, Major");
-            for (List row : values) {
-                // Print columns A and E, which correspond to indices 0 and 4.
-                System.out.printf("%s, %s\n", row.get(0), row.get(4));
-            }
-        }
 
         return values;
     }

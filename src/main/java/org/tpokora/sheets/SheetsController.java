@@ -1,23 +1,22 @@
 package org.tpokora.sheets;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
 public class SheetsController {
 
-//    @Autowired
+    @Autowired
     SheetsService sheetsService;
 
     @RequestMapping("/sheets")
-    public ResponseEntity<List<List<Object>>> sheets() throws GeneralSecurityException, IOException {
-        ReadSheets readSheets = new ReadSheets();
-        return new ResponseEntity<>(readSheets.test(), HttpStatus.OK);
+    public ResponseEntity<List<SheetRecord>> sheets() throws ParseException {
+        return new ResponseEntity<>(sheetsService.getSheetRecords(), HttpStatus.OK);
     }
 }
