@@ -30,14 +30,12 @@ public class SheetsService {
             System.out.println("No data found.");
         } else {
             for (List row : values) {
-                SheetRecord record = new SheetRecord();
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 Date date = format.parse(row.get(0).toString());
-                record.setDate(date);
-                record.setTemp(row.get(1).toString());
-                record.setHum(row.get(2).toString());
-                record.setPm25(row.get(3).toString());
-                record.setPm10(row.get(4).toString());
+                SheetRecord record = new SheetRecord.Builder(date).temperatur(row.get(1).toString())
+                        .humidity(row.get(2).toString()).pm25(row.get(3).toString())
+                        .pm10(row.get(4).toString()).build();
+
                 sheetRecords.add(record);
             }
         }
