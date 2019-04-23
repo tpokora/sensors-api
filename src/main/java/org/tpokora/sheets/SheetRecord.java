@@ -9,6 +9,26 @@ public class SheetRecord {
     private final String pm10;
     private final String pm25;
 
+    public Date getDate() {
+        return date;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public String getPm10() {
+        return pm10;
+    }
+
+    public String getPm25() {
+        return pm25;
+    }
+
     public static class Builder {
         private final Date date;
 

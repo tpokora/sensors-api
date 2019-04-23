@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class SheetsController {
     SheetsService sheetsService;
 
     @RequestMapping("/sheets")
-    public ResponseEntity<List<SheetRecord>> sheets() throws ParseException {
+    public ResponseEntity<List<SheetRecord>> sheets() throws ParseException, GeneralSecurityException, IOException {
         return new ResponseEntity<>(sheetsService.getSheetRecords(), HttpStatus.OK);
     }
 }

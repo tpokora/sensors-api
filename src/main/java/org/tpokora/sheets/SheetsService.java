@@ -1,6 +1,10 @@
 package org.tpokora.sheets;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.tpokora.sheets.config.SheetsConfiguration;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -14,20 +18,18 @@ import java.util.Locale;
 
 @Service
 public class SheetsService {
+    public static final Logger logger = LoggerFactory.getLogger(SheetsService.class);
 
-    public ArrayList<SheetRecord> getSheetRecords() throws ParseException {
+    @Autowired
+    private SheetsConfiguration sheetsConfiguration;
+
+    public ArrayList<SheetRecord> getSheetRecords() throws ParseException, GeneralSecurityException, IOException {
         ArrayList<SheetRecord> sheetRecords = new ArrayList<>();
         ReadSheets readSheets = new ReadSheets();
-        List<List<Object>> values = null;
-        try {
-            values = readSheets.readSheet();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        final String range = "Sensors!A2:E";
+        List<List<Object>> values = readSheets.readSheet(sheetsConfiguration.getId(), range);
         if (values == null || values.isEmpty()) {
-            System.out.println("No data found.");
+            logger.error("No data found.");
         } else {
             for (List row : values) {
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
