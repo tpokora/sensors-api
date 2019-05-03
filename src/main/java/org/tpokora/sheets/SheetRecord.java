@@ -74,4 +74,22 @@ public class SheetRecord {
         pm25 = builder.pm25;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (o == null || !(o instanceof SheetRecord)) {
+            return false;
+        }
+
+        SheetRecord sheetRecord = (SheetRecord) o;
+        return sheetRecord.pm25.equals(pm25)
+                && sheetRecord.pm10.equals(pm10)
+                && sheetRecord.humidity.equals(humidity)
+                && sheetRecord.temperature.equals(temperature)
+                && sheetRecord.date.compareTo(date) == 0;
+    }
+
 }
