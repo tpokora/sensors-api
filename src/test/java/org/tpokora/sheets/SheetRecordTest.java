@@ -56,6 +56,7 @@ public class SheetRecordTest {
                 .build();
 
         Assert.assertEquals(sheetRecord1, sheetRecord2);
+        Assert.assertEquals(sheetRecord1.hashCode(), sheetRecord2.hashCode());
     }
 
     @Test
@@ -76,6 +77,7 @@ public class SheetRecordTest {
                 .build();
 
         Assert.assertNotEquals(sheetRecord1, sheetRecord2);
+        Assert.assertNotEquals(sheetRecord1.hashCode(), sheetRecord2.hashCode());
     }
 
     private Date localDateToDate(LocalDate localDate) {

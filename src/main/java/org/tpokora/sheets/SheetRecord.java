@@ -92,4 +92,14 @@ public class SheetRecord {
                 && sheetRecord.date.compareTo(date) == 0;
     }
 
+    @Override
+    public int hashCode() {
+        int result = date.hashCode();
+        result = 31 * result + temperature.hashCode();
+        result = 31 * result + humidity.hashCode();
+        result = 31 * result + pm10.hashCode();
+        result = 31 * result + pm25.hashCode();
+        return result;
+    }
+
 }
