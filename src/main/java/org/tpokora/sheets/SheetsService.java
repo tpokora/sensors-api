@@ -30,14 +30,24 @@ public class SheetsService {
         } else {
             for (List row : values) {
                 LocalDateTime date = LocalDateTime.parse(row.get(0).toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                SheetRecord record = new SheetRecord.Builder(date).temperature(row.get(1).toString())
-                        .humidity(row.get(2).toString()).pm25(row.get(3).toString())
-                        .pm10(row.get(4).toString()).build();
+                SheetRecord record = new SheetRecord.Builder(date)
+                        .temperature(Double.valueOf(row.get(1).toString()))
+                        .humidity(Double.valueOf(row.get(2).toString()))
+                        .pm25(parseValue(row.get(3).toString()))
+                        .pm10(Double.valueOf(row.get(4).toString()))
+                        .build();
 
                 sheetRecords.add(record);
             }
         }
 
         return sheetRecords;
+    }
+
+    public Double parseValue(String value) {
+        if ("".equals(value)) {
+            return null;
+        }
+        return Double.parseDouble(value);
     }
 }

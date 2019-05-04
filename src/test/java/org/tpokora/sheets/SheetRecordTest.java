@@ -15,10 +15,10 @@ public class SheetRecordTest {
     public void setup() {
         LocalDateTime localDate = LocalDateTime.now();
         sheetRecord = new SheetRecord.Builder(localDate)
-                .humidity("10")
-                .pm10("10")
-                .pm25("25")
-                .temperature("30")
+                .humidity(10.)
+                .pm10(10.)
+                .pm25(25.)
+                .temperature(30.)
                 .build();
 
     }
@@ -42,16 +42,16 @@ public class SheetRecordTest {
     public void test_equalSameAllValues_success() {
         LocalDateTime localDate = LocalDateTime.now();
         SheetRecord sheetRecord1 = new SheetRecord.Builder(localDate)
-                .humidity("10")
-                .pm10("10")
-                .pm25("25")
-                .temperature("30")
+                .humidity(10.)
+                .pm10(10.)
+                .pm25(25.)
+                .temperature(30.)
                 .build();
         SheetRecord sheetRecord2 = new SheetRecord.Builder(localDate)
-                .humidity("10")
-                .pm10("10")
-                .pm25("25")
-                .temperature("30")
+                .humidity(10.)
+                .pm10(10.)
+                .pm25(25.)
+                .temperature(30.)
                 .build();
 
         Assert.assertEquals(sheetRecord1, sheetRecord2);
@@ -62,17 +62,17 @@ public class SheetRecordTest {
     public void test_equalDifferentDates_fail() {
         LocalDateTime localDate = LocalDateTime.now();
         SheetRecord sheetRecord1 = new SheetRecord.Builder(localDate)
-                .humidity("10")
-                .pm10("10")
-                .pm25("25")
-                .temperature("30")
+                .humidity(10.)
+                .pm10(10.)
+                .pm25(25.)
+                .temperature(30.)
                 .build();
         LocalDateTime localDatePlusDay = LocalDateTime.now().plusDays(1);
         SheetRecord sheetRecord2 = new SheetRecord.Builder(localDatePlusDay)
-                .humidity("10")
-                .pm10("10")
-                .pm25("25")
-                .temperature("30")
+                .humidity(10.)
+                .pm10(10.)
+                .pm25(25.)
+                .temperature(30.)
                 .build();
 
         Assert.assertNotEquals(sheetRecord1, sheetRecord2);
@@ -85,13 +85,13 @@ public class SheetRecordTest {
         stringBuilder.append("date=");
         stringBuilder.append(sheetRecord.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         stringBuilder.append(", temperature=");
-        stringBuilder.append(sheetRecord.getTemperature());
+        stringBuilder.append(String.format("%1.2f", sheetRecord.getTemperature()));
         stringBuilder.append(", humidity=");
-        stringBuilder.append(sheetRecord.getHumidity());
+        stringBuilder.append(String.format("%1.2f", sheetRecord.getHumidity()));
         stringBuilder.append(", pm10=");
-        stringBuilder.append(sheetRecord.getPm10());
+        stringBuilder.append(String.format("%1.2f", sheetRecord.getPm10()));
         stringBuilder.append(", pm25=");
-        stringBuilder.append(sheetRecord.getPm25());
+        stringBuilder.append(String.format("%1.2f", sheetRecord.getPm25()));
         Assert.assertEquals(stringBuilder.toString(), sheetRecord.toString());
     }
 

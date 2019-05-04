@@ -5,59 +5,58 @@ import java.time.format.DateTimeFormatter;
 
 public class SheetRecord implements Cloneable {
     private final LocalDateTime date;
-    private final String temperature;
-    private final String humidity;
-    private final String pm10;
-    private final String pm25;
+    private final Double temperature;
+    private final Double humidity;
+    private final Double pm10;
+    private final Double pm25;
 
     public LocalDateTime getDate() {
         return date;
     }
 
-    public String getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
-    public String getHumidity() {
+    public Double getHumidity() {
         return humidity;
     }
 
-    public String getPm10() {
+    public Double getPm10() {
         return pm10;
     }
 
-    public String getPm25() {
+    public Double getPm25() {
         return pm25;
     }
 
     public static class Builder {
         private final LocalDateTime date;
-
-        private String temperature = "";
-        private String humidity = "";
-        private String pm10 = "";
-        private String pm25 = "";
+        private Double temperature;
+        private Double humidity;
+        private Double pm10;
+        private Double pm25;
 
         public Builder(LocalDateTime date) {
             this.date = date;
         }
 
-        public Builder temperature(String temperature) {
+        public Builder temperature(Double temperature) {
             this.temperature = temperature;
             return this;
         }
 
-        public Builder humidity(String humidity) {
+        public Builder humidity(Double humidity) {
             this.humidity = humidity;
             return this;
         }
 
-        public Builder pm10(String pm10) {
+        public Builder pm10(Double pm10) {
             this.pm10 = pm10;
             return this;
         }
 
-        public Builder pm25(String pm25) {
+        public Builder pm25(Double pm25) {
             this.pm25 = pm25;
             return this;
         }
@@ -86,26 +85,26 @@ public class SheetRecord implements Cloneable {
         }
 
         SheetRecord sheetRecord = (SheetRecord) o;
-        return sheetRecord.pm25.equals(pm25)
-                && sheetRecord.pm10.equals(pm10)
-                && sheetRecord.humidity.equals(humidity)
-                && sheetRecord.temperature.equals(temperature)
+        return Double.compare(sheetRecord.pm25, pm25) == 0
+                && Double.compare(sheetRecord.pm10, pm10) == 0
+                && Double.compare(sheetRecord.humidity, humidity) == 0
+                && Double.compare(sheetRecord.temperature, temperature) == 0
                 && sheetRecord.date.compareTo(date) == 0;
     }
 
     @Override
     public int hashCode() {
         int result = date.hashCode();
-        result = 31 * result + temperature.hashCode();
-        result = 31 * result + humidity.hashCode();
-        result = 31 * result + pm10.hashCode();
-        result = 31 * result + pm25.hashCode();
+        result = 31 * result + Double.hashCode(temperature);
+        result = 31 * result + Double.hashCode(humidity);
+        result = 31 * result + Double.hashCode(pm10);
+        result = 31 * result + Double.hashCode(pm10);
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("date=%s, temperature=%s, humidity=%s, pm10=%s, pm25=%s",
+        return String.format("date=%s, temperature=%1.2f, humidity=%1.2f, pm10=%1.2f, pm25=%1.2f",
                 date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), temperature, humidity, pm10, pm25);
     }
 
