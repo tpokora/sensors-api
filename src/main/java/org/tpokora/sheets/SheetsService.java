@@ -8,13 +8,10 @@ import org.tpokora.sheets.config.SheetsConfiguration;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @Service
 public class SheetsService {
@@ -23,7 +20,7 @@ public class SheetsService {
     @Autowired
     private SheetsConfiguration sheetsConfiguration;
 
-    public ArrayList<SheetRecord> getSheetRecords() throws ParseException, GeneralSecurityException, IOException {
+    public ArrayList<SheetRecord> getSheetRecords() throws GeneralSecurityException, IOException {
         ArrayList<SheetRecord> sheetRecords = new ArrayList<>();
         ReadSheets readSheets = new ReadSheets();
         final String range = "Sensors!A2:E";
@@ -32,8 +29,7 @@ public class SheetsService {
             logger.error("No data found.");
         } else {
             for (List row : values) {
-                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-                Date date = format.parse(row.get(0).toString());
+                LocalDateTime date = LocalDateTime.parse(row.get(0).toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                 SheetRecord record = new SheetRecord.Builder(date).temperatur(row.get(1).toString())
                         .humidity(row.get(2).toString()).pm25(row.get(3).toString())
                         .pm10(row.get(4).toString()).build();

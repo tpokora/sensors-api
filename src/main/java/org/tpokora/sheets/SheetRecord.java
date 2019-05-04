@@ -1,15 +1,16 @@
 package org.tpokora.sheets;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SheetRecord {
-    private final Date date;
+    private final LocalDateTime date;
     private final String temperature;
     private final String humidity;
     private final String pm10;
     private final String pm25;
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -30,14 +31,14 @@ public class SheetRecord {
     }
 
     public static class Builder {
-        private final Date date;
+        private final LocalDateTime date;
 
         private String temperature = "";
         private String humidity = "";
         private String pm10 = "";
         private String pm25 = "";
 
-        public Builder(Date date) {
+        public Builder(LocalDateTime date) {
             this.date = date;
         }
 
@@ -100,6 +101,12 @@ public class SheetRecord {
         result = 31 * result + pm10.hashCode();
         result = 31 * result + pm25.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("date=%s, temperature=%s, humidity=%s, pm10=%s, pm25=%s",
+                date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), temperature, humidity, pm10, pm25);
     }
 
 }

@@ -4,9 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SheetRecordTest {
 
@@ -14,8 +13,8 @@ public class SheetRecordTest {
 
     @Before
     public void setup() {
-        LocalDate localDate = LocalDate.now();
-        sheetRecord = new SheetRecord.Builder(localDateToDate(localDate))
+        LocalDateTime localDate = LocalDateTime.now();
+        sheetRecord = new SheetRecord.Builder(localDate)
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
@@ -41,14 +40,14 @@ public class SheetRecordTest {
 
     @Test
     public void test_equalSameAllValues_success() {
-        LocalDate localDate = LocalDate.now();
-        SheetRecord sheetRecord1 = new SheetRecord.Builder(localDateToDate(localDate))
+        LocalDateTime localDate = LocalDateTime.now();
+        SheetRecord sheetRecord1 = new SheetRecord.Builder(localDate)
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
                 .temperatur("30")
                 .build();
-        SheetRecord sheetRecord2 = new SheetRecord.Builder(localDateToDate(localDate))
+        SheetRecord sheetRecord2 = new SheetRecord.Builder(localDate)
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
@@ -61,15 +60,15 @@ public class SheetRecordTest {
 
     @Test
     public void test_equalDifferentDates_fail() {
-        LocalDate localDate = LocalDate.now();
-        SheetRecord sheetRecord1 = new SheetRecord.Builder(localDateToDate(localDate))
+        LocalDateTime localDate = LocalDateTime.now();
+        SheetRecord sheetRecord1 = new SheetRecord.Builder(localDate)
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
                 .temperatur("30")
                 .build();
-        LocalDate localDatePlusDay = LocalDate.now().plusDays(1);
-        SheetRecord sheetRecord2 = new SheetRecord.Builder(localDateToDate(localDatePlusDay))
+        LocalDateTime localDatePlusDay = LocalDateTime.now().plusDays(1);
+        SheetRecord sheetRecord2 = new SheetRecord.Builder(localDatePlusDay)
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
@@ -80,7 +79,19 @@ public class SheetRecordTest {
         Assert.assertNotEquals(sheetRecord1.hashCode(), sheetRecord2.hashCode());
     }
 
-    private Date localDateToDate(LocalDate localDate) {
-        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    @Test
+    public void test_sheetRecordToString_success() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("date=");
+        stringBuilder.append(sheetRecord.getDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        stringBuilder.append(", temperature=");
+        stringBuilder.append(sheetRecord.getTemperature());
+        stringBuilder.append(", humidity=");
+        stringBuilder.append(sheetRecord.getHumidity());
+        stringBuilder.append(", pm10=");
+        stringBuilder.append(sheetRecord.getPm10());
+        stringBuilder.append(", pm25=");
+        stringBuilder.append(sheetRecord.getPm25());
+        Assert.assertEquals(stringBuilder.toString(), sheetRecord.toString());
     }
 }
