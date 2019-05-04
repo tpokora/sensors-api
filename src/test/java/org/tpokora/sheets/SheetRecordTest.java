@@ -18,7 +18,7 @@ public class SheetRecordTest {
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
-                .temperatur("30")
+                .temperature("30")
                 .build();
 
     }
@@ -45,13 +45,13 @@ public class SheetRecordTest {
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
-                .temperatur("30")
+                .temperature("30")
                 .build();
         SheetRecord sheetRecord2 = new SheetRecord.Builder(localDate)
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
-                .temperatur("30")
+                .temperature("30")
                 .build();
 
         Assert.assertEquals(sheetRecord1, sheetRecord2);
@@ -65,14 +65,14 @@ public class SheetRecordTest {
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
-                .temperatur("30")
+                .temperature("30")
                 .build();
         LocalDateTime localDatePlusDay = LocalDateTime.now().plusDays(1);
         SheetRecord sheetRecord2 = new SheetRecord.Builder(localDatePlusDay)
                 .humidity("10")
                 .pm10("10")
                 .pm25("25")
-                .temperatur("30")
+                .temperature("30")
                 .build();
 
         Assert.assertNotEquals(sheetRecord1, sheetRecord2);
@@ -93,5 +93,12 @@ public class SheetRecordTest {
         stringBuilder.append(", pm25=");
         stringBuilder.append(sheetRecord.getPm25());
         Assert.assertEquals(stringBuilder.toString(), sheetRecord.toString());
+    }
+
+    @Test
+    public void test_sheetRecordCloneTest_success() {
+        Assert.assertTrue(sheetRecord.clone() != sheetRecord);
+        Assert.assertTrue(sheetRecord.clone().getClass() == sheetRecord.getClass());
+        Assert.assertTrue(sheetRecord.clone().equals(sheetRecord));
     }
 }

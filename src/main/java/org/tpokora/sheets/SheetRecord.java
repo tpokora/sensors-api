@@ -3,7 +3,7 @@ package org.tpokora.sheets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class SheetRecord {
+public class SheetRecord implements Cloneable {
     private final LocalDateTime date;
     private final String temperature;
     private final String humidity;
@@ -42,7 +42,7 @@ public class SheetRecord {
             this.date = date;
         }
 
-        public Builder temperatur(String temperature) {
+        public Builder temperature(String temperature) {
             this.temperature = temperature;
             return this;
         }
@@ -107,6 +107,15 @@ public class SheetRecord {
     public String toString() {
         return String.format("date=%s, temperature=%s, humidity=%s, pm10=%s, pm25=%s",
                 date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")), temperature, humidity, pm10, pm25);
+    }
+
+    @Override
+    public SheetRecord clone() {
+        try {
+            return (SheetRecord) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 
 }
